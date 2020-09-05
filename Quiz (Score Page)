@@ -1,0 +1,9 @@
+import flash.events.MouseEvent;
+
+score_txt.text = String(nilai);
+
+Button_Back.addEventListener(MouseEvent.CLICK, Kembali5);
+
+function Kembali5(event:MouseEvent):void{
+	gotoAndStop(73);
+}
