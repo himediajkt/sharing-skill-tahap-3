@@ -1,0 +1,14 @@
+import flash.events.MouseEvent;
+
+Button_Back.addEventListener(MouseEvent.CLICK, PopupQuiz);
+Button_Mulai.addEventListener(MouseEvent.CLICK, PopupQuiz);
+
+function PopupQuiz(e:MouseEvent):void{
+	var nama_tombol:String = e.currentTarget.name;
+	if (nama_tombol == "Button_Back"){
+		gotoAndStop(73);
+	}
+	if (nama_tombol == "Button_Mulai"){
+		gotoAndStop(85);
+	}
+}
