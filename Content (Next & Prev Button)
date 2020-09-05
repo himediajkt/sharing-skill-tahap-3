@@ -1,0 +1,13 @@
+import flash.events.MouseEvent;
+
+Button_Next.addEventListener(MouseEvent.CLICK, next4);
+
+function next4(e:MouseEvent):void{
+	gotoAndStop(_);
+}
+
+Button_Prev.addEventListener(MouseEvent.CLICK, prev3);
+
+function prev3(e:MouseEvent):void{
+	gotoAndStop(_);
+}
