@@ -1,0 +1,15 @@
+import flash.desktop.NativeApplication;
+import flash.events.MouseEvent;
+
+Button_No.addEventListener(MouseEvent.CLICK, Keluar);
+Button_Yes.addEventListener(MouseEvent.CLICK, Keluar);
+
+function Keluar(e:MouseEvent):void{
+	var nama_tombol:String = e.currentTarget.name;
+	if (nama_tombol == "Button_No"){
+		gotoAndStop(73);
+	}
+	if (nama_tombol == "Button_Yes"){
+		NativeApplication.nativeApplication.exit();
+	}
+}
