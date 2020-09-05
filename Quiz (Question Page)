@@ -1,0 +1,181 @@
+import flash.events.MouseEvent;
+import flash.events.Event;
+import flash.media.SoundTransform;
+
+var myButton = new button_3();
+var volume = new SoundTransform(0.8, 0);
+
+var nilai:Number = 0;
+var no_soal:Number = 0;
+var max_soal:Number = 10;
+var hasil:hasil_mc;
+var no:Number = 1;
+
+var soal:Array = [["Berikut ini penggunaan huruf kapital yang benar adalah",
+				"Pisang Ambon","Kalimantan Barat","Bintang Timur","Orang Madura"],
+
+				["Berikut ini penulisan kata yang benar adalah",
+				"tanggungjawab","menyebarluaskan","pertanggung jawaban","menyebar luaskan"],
+
+				["Di bawah ini yang merupakan singkatan",
+				"E.S.","PBB","Sdr.","Polmed"],
+
+				["Tanda yang dipakai pada akhir kalimat",
+				"titik (.)","koma (,)","titik koma(;)","garis miring (/)"],
+
+				["Digunakan di antara unsur-unsur dalam perincian",
+				"koma (,)","titik (.)","titik koma(;)","garis miring (/)"],
+
+				["Simbol yang digunakan untuk memisahkan bagian kalimat yang sejenis dan setara",
+				"titik koma(;)","koma (,)","titik (.)","garis miring (/)"],
+
+				["Di bawah ini yang manakah yang termasuk tulisan tetap?",
+				"ideal","fokus","jenius","komputer"],
+
+				["Management",
+				"manajemen","managemen","menejemen","menegemen"],
+
+				["Concret",
+				"konkret","kongkret","kongkrit","konkrit"],
+
+				["Congress",
+				"kongres","konggres","kongress","konres"]];
+				
+var temp_soal:Array;
+var temp_jawaban:Array;
+
+acak_soal();
+nilai = 0;
+no_soal = 0;
+max_soal = 10;
+score_txt.text = "0";
+no_txt.text = "1";
+
+function acak_soal():void{
+	temp_soal = soal.slice(0, soal.length);
+	for (var i:Number = 0; i < soal.length; i++){
+		var acak:Number = Math.floor(Math.random()*soal.length);
+		var temp:Array = temp_soal[acak];
+		temp_soal[acak] = temp_soal[i];
+		temp_soal[i] = temp;
+	}
+}
+
+function tampilkan_soal():void{
+	soal_txt.text = temp_soal[no_soal][0];
+	temp_jawaban = temp_soal[no_soal].slice(1, 5);
+	for (var i:Number = 0; i < temp_jawaban.length; i++){
+		var acak:Number = Math.floor(Math.random()*temp_jawaban.length);
+		var temp:String = temp_jawaban[acak];
+		temp_jawaban[acak] = temp_jawaban[i];
+		temp_jawaban[i] = temp;
+	}
+	jawaban_1.jawaban_txt.text = temp_jawaban[0];
+	jawaban_2.jawaban_txt.text = temp_jawaban[1];
+	jawaban_3.jawaban_txt.text = temp_jawaban[2];
+	jawaban_4.jawaban_txt.text = temp_jawaban[3];
+}
+
+function setup_awal():void{
+	tampilkan_soal();
+	jawaban_1.stop();
+	jawaban_2.stop();
+	jawaban_3.stop();
+	jawaban_4.stop();
+	jawaban_1.addEventListener(MouseEvent.CLICK, cek_jawaban);
+	jawaban_2.addEventListener(MouseEvent.CLICK, cek_jawaban);
+	jawaban_3.addEventListener(MouseEvent.CLICK, cek_jawaban);
+	jawaban_4.addEventListener(MouseEvent.CLICK, cek_jawaban);
+	
+	jawaban_1.addEventListener(MouseEvent.CLICK, mouse_over);
+	jawaban_2.addEventListener(MouseEvent.CLICK, mouse_over);
+	jawaban_3.addEventListener(MouseEvent.CLICK, mouse_over);
+	jawaban_4.addEventListener(MouseEvent.CLICK, mouse_over);
+	
+	jawaban_1.addEventListener(MouseEvent.MOUSE_OUT, mouse_out);
+	jawaban_2.addEventListener(MouseEvent.MOUSE_OUT, mouse_out);
+	jawaban_3.addEventListener(MouseEvent.MOUSE_OUT, mouse_out);
+	jawaban_4.addEventListener(MouseEvent.MOUSE_OUT, mouse_out);
+	
+}
+
+function mouse_over(e:MouseEvent):void{
+	e.currentTarget.gotoAndStop(2);
+	myButton.play(0, 1, volume);
+}
+
+function mouse_out(e:MouseEvent):void{
+	e.currentTarget.gotoAndStop(1);
+}
+
+function cek_jawaban(e:MouseEvent):void{
+	jawaban_1.removeEventListener(MouseEvent.CLICK, cek_jawaban);
+	jawaban_2.removeEventListener(MouseEvent.CLICK, cek_jawaban);
+	jawaban_3.removeEventListener(MouseEvent.CLICK, cek_jawaban);
+	jawaban_4.removeEventListener(MouseEvent.CLICK, cek_jawaban);
+	jawaban_1.removeEventListener(MouseEvent.CLICK, mouse_over);
+	jawaban_2.removeEventListener(MouseEvent.CLICK, mouse_over);
+	jawaban_3.removeEventListener(MouseEvent.CLICK, mouse_over);
+	jawaban_4.removeEventListener(MouseEvent.CLICK, mouse_over);
+	var no_jawaban:Number = Number(e.currentTarget.name.substr(8))-1;
+	if (temp_jawaban[no_jawaban] == temp_soal[no_soal][1]){
+		tampilkan_hasil(1);
+		nilai+=10;
+		score_txt.text = String(nilai);
+	} else {
+		tampilkan_hasil(2);
+	}
+}
+
+function tampilkan_hasil(tp:Number):void{
+	hasil = new hasil_mc();
+	hasil.x = 560;
+	hasil.y = 830;
+	hasil.gotoAndStop(tp);
+	hasil.scaleX = 0.2;
+	hasil.scaleY = 0.2;
+	hasil.waktu = 0;
+	hasil.tp = tp;
+	hasil.addEventListener(Event.ENTER_FRAME, gerak_hasil);
+	addChild(hasil);
+}
+
+function gerak_hasil(e:Event):void{
+	var ob:Object = e.currentTarget;
+	if (ob.scaleX < 1){
+		ob.scaleX+=0.1;
+		ob.scaleY+=0.1;
+	}
+	if (ob.waktu > -1 && ob.tp < 3){
+		ob.waktu++;
+		if (ob.waktu > 60){
+			ob.waktu = -1;
+			
+			no_soal++;
+			no+=1;
+			no_txt.text = String(no);
+			jawaban_1.gotoAndStop(1);
+			jawaban_2.gotoAndStop(1);
+			jawaban_3.gotoAndStop(1);
+			jawaban_4.gotoAndStop(1);
+			jawaban_1.addEventListener(MouseEvent.CLICK, cek_jawaban);
+			jawaban_2.addEventListener(MouseEvent.CLICK, cek_jawaban);
+			jawaban_3.addEventListener(MouseEvent.CLICK, cek_jawaban);
+			jawaban_4.addEventListener(MouseEvent.CLICK, cek_jawaban);
+			jawaban_1.addEventListener(MouseEvent.CLICK, mouse_over);
+			jawaban_2.addEventListener(MouseEvent.CLICK, mouse_over);
+			jawaban_3.addEventListener(MouseEvent.CLICK, mouse_over);
+			jawaban_4.addEventListener(MouseEvent.CLICK, mouse_over);
+			ob.removeEventListener(Event.ENTER_FRAME, gerak_hasil);
+			removeChild(DisplayObject(ob));
+			if (no_soal < max_soal){
+				tampilkan_soal();
+			} else {
+				tampilkan_hasil(3);
+				gotoAndStop(86);
+			}
+		}
+	}
+}
+
+setup_awal();
