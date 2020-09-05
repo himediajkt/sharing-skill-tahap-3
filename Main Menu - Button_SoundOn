@@ -1,0 +1,11 @@
+import flash.media.SoundTransform;
+import flash.media.SoundMixer;
+import flash.events.MouseEvent;
+
+Button_SoundOn.addEventListener(MouseEvent.CLICK, SoundOff);
+
+function SoundOff(event:MouseEvent):void{
+	Button_SoundOn.visible = false;
+	Button_SoundOff.visible = true;
+	SoundMixer.stopAll();
+}
