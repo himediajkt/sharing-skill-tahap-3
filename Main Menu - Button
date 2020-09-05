@@ -1,0 +1,30 @@
+import flash.events.MouseEvent;
+
+Button_1.addEventListener(MouseEvent.CLICK, navigasi);
+Button_2.addEventListener(MouseEvent.CLICK, navigasi);
+Button_3.addEventListener(MouseEvent.CLICK, navigasi);
+Button_4.addEventListener(MouseEvent.CLICK, navigasi);
+Button_Quiz.addEventListener(MouseEvent.CLICK, navigasi);
+Button_Exit.addEventListener(MouseEvent.CLICK, navigasi);
+
+function navigasi(e:MouseEvent):void{
+	var nama_tombol:String = e.currentTarget.name;
+	if (nama_tombol == "Button_1"){
+		gotoAndStop(76);
+	}
+	if (nama_tombol == "Button_2"){
+		gotoAndStop(78);
+	}
+	if (nama_tombol == "Button_3"){
+		gotoAndStop(80);
+	}
+	if (nama_tombol == "Button_4"){
+		gotoAndStop(83);
+	}
+	if (nama_tombol == "Button_Quiz"){
+		gotoAndStop(74);
+	}
+	if (nama_tombol == "Button_Exit"){
+		gotoAndStop(75);
+	}
+}
