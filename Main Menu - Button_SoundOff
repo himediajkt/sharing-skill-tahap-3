@@ -1,0 +1,13 @@
+import flash.media.SoundTransform;
+import flash.events.MouseEvent;
+
+var myMusic1 = new Music();
+var volumesuara1 = new SoundTransform(0.5, 0);
+
+Button_SoundOff.addEventListener(MouseEvent.CLICK, SoundOn);
+
+function SoundOn(event:MouseEvent):void{
+	Button_SoundOn.visible = true;
+	Button_SoundOff.visible = false;
+	myMusic1.play(0, 9999, volumesuara1);
+}
